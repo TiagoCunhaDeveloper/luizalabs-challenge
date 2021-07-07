@@ -12,7 +12,7 @@
 > dtos -> Responsável por como os dados de entrada devem ser estruturados </br>
 > migrations -> Onde esta o modulo de migração de dados </br>
 > providers -> Onde estão as conexões com serviços de terceiros (tratamento de exceções, interceptores e guardas)</br>
-> repositories -> Camada responsável pela persistência em banco de dados</br>
+> repositories -> Camada responsável pela persistência em banco de dados (utilizando o MongoDB Atlas)</br>
 > service -> Onde vamos conectar os dados de entrada, aplicar alguma lógica a eles e retornar o resultado com base em nossos modelos</br>
 > resources -> Onde estão os dados usados nas migrações</br>
 
