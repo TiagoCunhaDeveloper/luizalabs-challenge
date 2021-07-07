@@ -28,11 +28,11 @@ export class ClientRepository {
     return this.clientModel.find()
   }
 
-  async update(client: SaveClientDTO, id: string): Promise<void> {
-    await this.clientModel.updateOne({ id }, client)
+  async update(client: ClientModel, id: string): Promise<void> {
+    await this.clientModel.updateOne({ _id: id }, client)
   }
 
   async deleteById(id: string): Promise<void> {
-    await this.clientModel.deleteOne({ id })
+    await this.clientModel.deleteOne({ _id: id })
   }
 }

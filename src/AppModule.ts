@@ -37,7 +37,7 @@ import { ProductsService } from './services/ProductsService';
       load:[]
     }),
     MongooseModule.forRoot(
-      'mongodb+srv://omnistack:omnistack@cluster0.pdycg.mongodb.net/luizalabs-app?retryWrites=true&w=majority',
+      process.env.MONGODB_URL,
     ),
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     MongooseModule.forFeature([{ name: Client.name, schema: ClientSchema }]),

@@ -1,8 +1,9 @@
-import { ConflictException,forwardRef,Inject,Injectable } from '@nestjs/common';
+import { ConflictException,forwardRef,Inject,Injectable, NotFoundException } from '@nestjs/common';
 import { SaveClientDTO } from '../dtos/SaveClientDTO';
 import { ClientModel } from '../domain/models/Client';
 import { ClientRepository } from '../repositories/ClientRepository';
 import { AuthService } from './AuthService';
+import { UpdateClientDTO } from '../dtos/UpdateClientDTO';
 
 @Injectable()
 export class ClientService {
@@ -37,8 +38,17 @@ export class ClientService {
     return this.clientRepository.getAll()
   }
 
-  async update(client: SaveClientDTO, id: string): Promise<void> {
-    await this.clientRepository.update(client,id)
+  async update(payload: UpdateClientDTO): Promise<void> {
+    const client = await this.getById(payload.id)
+
+    if(!client) {
+      throw new NotFoundException(`Client not found!`)
+    }
+
+    client.name = payload.name ?? client.name
+    client.email = payload.email ?? client.email
+
+    await this.clientRepository.update(client,payload.id)
   }
 
   async deleteById(id: string): Promise<void> {

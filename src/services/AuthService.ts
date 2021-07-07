@@ -16,7 +16,7 @@ export class AuthService {
     private readonly clientService: ClientService
   ) {}
 
-  async login(payload: LoginDTO) {
+  async login(payload: LoginDTO): Promise<string> {
     const client = await this.clientService.getByEmail(payload.email)
 
     if(!client) {
@@ -34,7 +34,11 @@ export class AuthService {
   }
 
   async generateJwt(user: ClientModel): Promise<string> {
-    return this.jwtService.signAsync({ user })
+    const authUser = {
+      id: user.id,
+      name: user.name,
+    }
+    return this.jwtService.signAsync({ user: authUser })
   }
 
   async hashPassword(

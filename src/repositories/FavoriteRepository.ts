@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FavoriteDocument, Favorite } from '../domain/schemas/FavoriteSchema';
 import { FavoriteModel } from '../domain/models/Favorite';
-import { SaveFavoriteDTO } from '../dtos/SaveFavoriteDTO';
 
 @Injectable()
 export class FavoriteRepository {
@@ -12,12 +11,12 @@ export class FavoriteRepository {
     @InjectModel(Favorite.name) private favoriteModel: Model<FavoriteDocument>,
   ) {}
 
-  async findByClientIdOrCreate(payload: SaveFavoriteDTO): Promise<FavoriteModel> {
-    let favorite = await this.favoriteModel.findOne({ idClient: payload.idClient })
+  async findByClientIdOrCreate(idClient: string): Promise<FavoriteModel> {
+    let favorite = await this.favoriteModel.findOne({ idClient })
 
     if(!favorite) {
       const newFavorite = {
-        idClient: payload.idClient,
+        idClient,
         products: []
       }
       favorite = await this.favoriteModel.create(newFavorite)

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { Product, ProductSchema } from '../domain/schemas/ProductSchema';
+import { ProductRepository } from '../repositories/ProductRepository';
 import { ProductsService } from '../services/ProductsService';
 
 import { ProductsServiceMigration } from './services/ProductsServiceMigration';
@@ -14,6 +15,6 @@ import { ProductsServiceMigration } from './services/ProductsServiceMigration';
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
   ],
   controllers: [],
-  providers: [ProductsServiceMigration, ProductsService],
+  providers: [ProductsServiceMigration, ProductsService, ProductRepository],
 })
 export class MigrationModule {}

@@ -12,7 +12,7 @@ export class ProductsService {
     return this.productsRepository.getByPage(page, limit);   
   }
 
-  async createProduct(product: ProductModel): Promise<void> {
+  async save(product: ProductModel): Promise<void> {
     await this.productsRepository.create(product);
   }
   

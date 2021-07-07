@@ -7,6 +7,7 @@ import { ClientService } from './ClientService';
 import { ProductsService } from './ProductsService';
 import { FavoriteRepository } from '../repositories/FavoriteRepository';
 import { FavoriteModel } from '../domain/models/Favorite';
+import { ClientModel } from '../domain/models/Client';
 
 @Injectable()
 export class FavoriteServices {
@@ -17,14 +18,14 @@ export class FavoriteServices {
     private readonly favoriteRepository: FavoriteRepository
   ) {}
 
-  async saveFavorite(payload: SaveFavoriteDTO): Promise<void> {
-    const client = await this.clientService.getById(payload.idClient)
+  async save(payload: SaveFavoriteDTO, user: Partial<ClientModel>): Promise<void> {
+    const client = await this.clientService.getById(user.id)
 
     if(!client) {
       throw new NotFoundException(`Client not found!`)
     }
 
-    const favorite = await this.favoriteRepository.findByClientIdOrCreate(payload)    
+    const favorite = await this.favoriteRepository.findByClientIdOrCreate(user.id)    
 
     favorite.products = await this.validateProducts(payload,favorite)
 
@@ -36,7 +37,7 @@ export class FavoriteServices {
     return this.favoriteRepository.findByClientId(idClient)
   }
 
-  private async validateProducts(payload: SaveFavoriteDTO, favorite: FavoriteModel): Promise<FavoriteProducts[]> {
+  async validateProducts(payload: SaveFavoriteDTO, favorite: FavoriteModel): Promise<FavoriteProducts[]> {
     const existingProducts: FavoriteProducts[] = []
 
     for (const productId of payload.products) {

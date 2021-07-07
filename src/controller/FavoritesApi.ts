@@ -1,7 +1,8 @@
-import { Body, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Body, Get, Request, UseInterceptors } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common';
 import { Post } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
+import { ClientModel } from '../domain/models/Client';
 import { FavoriteModel } from '../domain/models/Favorite';
 import { SaveFavoriteDTO } from '../dtos/SaveFavoriteDTO';
 import { JwtAuthGuard } from '../providers/guards/JwtAuthGuard';
@@ -17,15 +18,15 @@ export class FavoritesApi {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async saveFavorite(@Body() payload: SaveFavoriteDTO): Promise<void> {
-    return this.favoriteService.saveFavorite(payload);
+  async saveFavorite(@Body() payload: SaveFavoriteDTO, @Request() request: { user: { user: Partial<ClientModel> } }): Promise<void> {
+    return this.favoriteService.save(payload, request.user.user);
   }
 
-  @Get(':idClient')
+  @Get()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(new ExcludeVersionFromMongooseModel())
-  async getByIdClient(@Param('idClient') idClient: string): Promise<FavoriteModel> {
-    return this.favoriteService.getByIdClient(idClient);
+  async getByIdClient(@Request() request: { user: { user: Partial<ClientModel> } }): Promise<FavoriteModel> {
+    return this.favoriteService.getByIdClient(request.user.user.id);
   }
 
 }

@@ -30,7 +30,7 @@ export class ProductsServiceMigration {
       product.price = price
       product.reviewScore = reviewScore
 
-      await this.productsService.createProduct(product);
+      await this.productsService.save(product);
     }
 
     return;
