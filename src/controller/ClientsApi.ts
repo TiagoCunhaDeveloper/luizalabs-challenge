@@ -5,6 +5,7 @@ import { ClientService } from '../services/ClientService';
 import { ExcludeVersionFromMongooseModel } from '../providers/interceptors/ExcludeVersionFromMongooseModel';
 import { JwtAuthGuard } from '../providers/guards/JwtAuthGuard';
 import { UpdateClientDTO } from '../dtos/UpdateClientDTO';
+import { DeleteClientDTO } from '../dtos/DeleteClientDTO';
 
 @Controller('client')
 export class ClientsApi {
@@ -40,7 +41,7 @@ export class ClientsApi {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  delete(@Param('id') id: string): Promise<void> {
-    return this.clientService.deleteById(id)
+  delete(@Param() payload: DeleteClientDTO): Promise<void> {
+    return this.clientService.deleteById(payload.id)
   }
 }

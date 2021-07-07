@@ -7,6 +7,7 @@ import { ExcludeVersionFromMongooseModel } from '../providers/interceptors/Exclu
 import { QueryParamsToNumberPipe } from '../providers/pipes/QueryParamsToNumberPipe';
 import { ProductsService } from '../services/ProductsService';
 import { JwtAuthGuard } from '../providers/guards/JwtAuthGuard';
+import { GetProductDTO } from '../dtos/GetProductDTO';
 
 @Controller('product')
 export class ProductsApi {
@@ -26,7 +27,8 @@ export class ProductsApi {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(new ExcludeVersionFromMongooseModel())
-  async getProduct(@Param('id') id: string): Promise<ProductModel> {
-    return this.productsService.getById(id);
+  async getProduct(@Param() payload: GetProductDTO): Promise<ProductModel> {
+    console.log('PAY',payload)
+    return this.productsService.getById(payload.id);
   }
 }
