@@ -70,3 +70,9 @@ Todas as rotas possuem validações e padronizações de retorno
 ### Testes
 Foi desenvolvido testes unitários para validar os serviços
 ![image](https://user-images.githubusercontent.com/46055504/124687022-8ad5b500-deaa-11eb-8645-7871b95f9277.png)
+
+### Execução
+Foi usado docker para execução do projeto, ao rodar ele já executa as migrations
+```bash
+bash run.sh
+```

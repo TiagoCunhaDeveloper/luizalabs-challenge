@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: luizalabs-app
+    env_file:
+      - .env
+    networks:
+      - nest-network
+    volumes:
+      - .:/usr/app
+    tty: true
+    ports:
+      - '${PORT}:${PORT}'
+
+networks:
+  nest-network:
+    driver: bridge

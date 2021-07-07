@@ -32,8 +32,6 @@ export class ProductsServiceMigration {
 
       await this.productsService.save(product);
     }
-
-    return;
   }
 
   async deleteData(): Promise<void> {

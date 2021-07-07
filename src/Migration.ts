@@ -7,10 +7,12 @@ export class Migration {
   async init(): Promise<void> {
     if (process.argv[2] === '-l') {
       await this.loadTable();
+      process.exit();
     }
 
     if (process.argv[2] === '-d') {
       await this.deleteData();
+      process.exit();
     }
   }
 
