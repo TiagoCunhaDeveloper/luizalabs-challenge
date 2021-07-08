@@ -74,5 +74,6 @@ Foi desenvolvido testes unitários para validar os serviços
 ### Execução
 Foi usado docker para execução do projeto, ao rodar ele já executa as migrations
 ```bash
+npm install
 bash run.sh
 ```
